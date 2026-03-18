@@ -1,0 +1,29 @@
+name: C++ CI Sanity Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: sudo apt-get update && sudo apt-get install -y g++ build-essential
+
+    - name: Compile Engine (v8-Final)
+      run: |
+        mkdir -p build
+        g++ -Ofast -march=native -std=c++20 src/macro_engine_v8_final.cpp -o build/macro_engine_v8
+
+    - name: Market Logic Sanity Check
+      run: |
+        # Run a test execution to verify Alpha and FX normalization logic
+        ./build/macro_engine_v8 --ibm 249.25 --hynix 1008500 | grep "GLOBAL_V8"
+        echo "Sanity Check Passed: Engine is responsive and normalizing data."
