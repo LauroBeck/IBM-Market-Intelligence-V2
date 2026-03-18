@@ -1,0 +1,20 @@
+<<<<<<< HEAD
+# Build
+build/
+*.o
+
+# Python
+venv/
+__pycache__/
+
+# OS
+.DS_Store
+
+# Data (optional)
+# data/*.csv
+=======
+venv/
+build/
+*.o
+.DS_Store
+>>>>>>> 4adf0a9 (chore: add gitignore for build artifacts and venv)
